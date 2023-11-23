@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Qiswah Loundry</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+</head>
+<header>
+    <!-- <marquee behavior="" direction="Right">Qiswah Loundry</marquee> -->
+    <h1 class="cool-title" , style="font-size: 100px;"> Qiswah Loundry
+        <img src="mesin.png" height="auto" width="150px">
+    </h1>
+
+</header>
+
+<body>
+
+
+    <section>
+        <h2>Daftar Cucian</h2>
+        <ul id="daftar-cucian">
+            <!-- Daftar cucian akan ditampilkan di sini -->
+        </ul>
+        <h2> Total : <ul id="TotalLoundry"></ul>
+        </h2>
+
+    </section>
+
+    <section>
+        <h2>Tambah Cucian Baru</h2>
+        <form id="form-cucian">
+            <label for="nama-cucian">Nama Cucian:</label>
+            <input type="text" id="nama-cucian" required>
+            <label for="status-cucian">Status Cucian:</label>
+            <select id="status_cucian">
+                <option id="cuci_setrika" value="7000">Cuci + Setrika</option>
+                <option id="cuci" value="5000">Cuci</option>
+                <option id="setrika" value="5000">Setrika</option>
+            </select>
+            <br>
+            <br>
+
+            <label for="berat-cucian">Berat Cucian:</label>
+            <input type="number" id="berat_cucian" required>
+            <br>
+
+            <label for="jenis-cucian">Jenis Cucian:</label>
+            <select id="jenis_cucian">
+                <option value="0">Ruguler</option>
+                <option value="1000">Kilat</option>
+                <option value="2000">Express</option>
+            </select>
+            <br>
+            <br>
+            <label for="tanggalLoundry">Tanggal Loundry:</label>
+            <input type="date" id="tanggalLoundry" name="tanggalLoundry">
+
+            <center>
+                <button type="button" onclick="Cek()">Total</button>
+                <br>
+                <br>
+                <button type="button" onclick="tambahCucian()">Tambah Cucian</button>
+
+
+            </center>
+        </form>
+    </section>\
+
+
+
+
+
+
+
+</body>
+
+
+
+<ul class="wrapper">
+    <li class="icon facebook" id="facebookIcon" onclick="keFacebook()">
+        <span class="tooltip">Facebook</span>
+        <span><i class="fab fa-facebook-f"></i></span>
+    </li>
+    <li class="icon twitter">
+        <span class="tooltip">Twitter</span>
+        <span><i class="fab fa-twitter"></i></span>
+    </li>
+    <li class="icon instagram" id="instagramIcon" onclick="redirectToInstagram()">
+        <span class="tooltip">Instagram</span>
+        <span><i class="fab fa-instagram"></i></span>
+    </li>
+    <li class="icon whatsapp" id="whatsappIcon" onclick="redirectToWhatsApp()">
+        <span class="tooltip">WhatsApp</span>
+        <span><i class="fab fa-whatsapp"></i></span>
+    </li>
+    <li class="icon youtube" id="iconYT" onclick="keYoutube()">
+        <span class="tooltip">Youtube</span>
+        <span><i class="fab fa-youtube"></i></span>
+    </li>
+</ul>
+<br>
+<br>
+<footer style="background-color: #f4cee5;">
+    <div class="address-container">
+        <div class="address-item">
+          <h3>Alamat:</h3>
+          <p>Jl. Raya Ps. Muara No.23, Muarabakti, Kec. Babelan, bekasi, Jawa Barat 17610, Indonesia</p>
+         
+        </div>
+        <div class="address-item">
+          <h3>Kontak</h3>
+          <p>Email: ahmadalwi0904@gmail.com</p>
+          <p>Telepon: +62 858-5351-8809</p>
+        </div>
+        <div class="address-item">
+            <h3>Owner Sosmed</h3>
+            
+            <span class="social-icons">
+                
+                <!-- Tambahkan ikon-ikon sosial media di sini -->
+                <i class="fab fa-facebook" style="width: 50px;" onclick="keFacebook()"></i>
+                <i class="fab fa-whatsapp" style="width: 50px;" onclick="redirectToWhatsApp()"></i>
+                <i class="fab fa-whatsapp" style="width: 50px;" onclick="redirectToWhatsApp2()"></i>
+                <i class="fab fa-instagram" style="width: 50px;" onclick="redirectToInstagram2()"></i>
+                <!-- Anda dapat menambahkan ikon sosial media lain sesuai kebutuhan -->
+            </span>
+        </div>
+        
+        
+          
+        
+      </div>
+<br>
+<br>
+<br>
+<br>
+</footer>
+
+
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Inisialisasi data cucian
+        var daftarCucian = [];
+
+        // Fungsi untuk menambah cucian
+        window.tambahCucian = function () {
+            var namaCucian = document.getElementById('nama-cucian').value;
+            //var jenisCucian = document.getElementById('jenis-cucian').value;
+            var statusCucian = document.getElementById('status_cucian').value;
+            var beratCucian = document.getElementById('berat_cucian').value;
+            var jenisCucian = document.getElementById('jenis_cucian').value;
+            var tanggalLoundry = document.getElementById('tanggalLoundry').value;
+
+            // Validasi input
+            if (namaCucian && statusCucian) {
+                // Tambahkan cucian ke daftar
+                daftarCucian.push({ nama: namaCucian, status: statusCucian, berat: beratCucian, jenis: jenisCucian, tanggal: tanggalLoundry });
+
+                // Perbarui tampilan daftar cucian
+                perbaruiTampilanDaftarCucian();
+
+                // Kosongkan formulir
+                document.getElementById('form-cucian').reset();
+            } else {
+                alert('Silakan isi semua field!');
+            }
+        };
+
+        // Fungsi untuk memperbarui tampilan daftar cucian
+        function perbaruiTampilanDaftarCucian() {
+            var daftarCucianElement = document.getElementById('daftar-cucian');
+            daftarCucianElement.innerHTML = '';
+
+            // Tampilkan setiap cucian dalam daftar
+            daftarCucian.forEach(function (cucian) {
+                var listItem = document.createElement('li');
+                var listItem2 = document.createElement('li');
+                var listItem1 = document.createElement('li');
+                var listItem3 = document.createElement('li');
+                var listItem4 = document.createElement('li');
+
+                listItem.textContent = 'Nama: ' + cucian.nama;
+                listItem1.textContent = 'Status Cucian : ' + cucian.status;
+                listItem2.textContent = 'Berat Cucian : ' + cucian.berat + 'kg';
+                listItem3.textContent = 'Jenis Cucian: ' + cucian.jenis + '/kg';
+                listItem4.textContent = 'Tanggal Loundry: ' + cucian.tanggal;
+                daftarCucianElement.appendChild(listItem);
+                daftarCucianElement.appendChild(listItem1);
+                daftarCucianElement.appendChild(listItem2);
+                daftarCucianElement.appendChild(listItem3);
+                daftarCucianElement.appendChild(listItem4);
+            });
+        }
+    });
+    function Cek() {
+        var status_cucian, berat_cucian, jenis_cucian, TotalHasil, TotalLoundry2, hasilFormatted;
+
+        status_cucian = parseFloat(document.getElementById('status_cucian').value);
+        berat_cucian = parseFloat(document.getElementById('berat_cucian').value);
+        jenis_cucian = parseFloat(document.getElementById('jenis_cucian').value);
+
+        var hasilLoundry = parseFloat(status_cucian) * parseFloat(berat_cucian);
+        var type = parseFloat(jenis_cucian) * parseFloat(berat_cucian);
+
+        var TotalHasil = parseFloat(hasilLoundry) + parseFloat(type);
+        var hasilFormatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(TotalHasil);
+        document.getElementById('TotalLoundry').textContent = hasilFormatted;
+    }
+    //go to sosmed
+    function redirectToWhatsApp() {
+        // Change the phone number to the desired WhatsApp number
+        var phoneNumber = '085853518809';
+        window.location.href = 'https://wa.me/' + phoneNumber;
+    }
+    function redirectToWhatsApp2() {
+        // Change the phone number to the desired WhatsApp number
+        var phoneNumber = '089615234856';
+        window.location.href = 'https://wa.me/' + phoneNumber;
+    }
+    function redirectToInstagram() {
+        // Change the Instagram username in the URL to the desired username
+        var username = 'qiswahloundry';
+        window.location.href = 'https://www.instagram.com/' + username;
+    }
+    function redirectToInstagram2() {
+        // Change the Instagram username in the URL to the desired username
+        var username = 'aalwi09';
+        window.location.href = 'https://www.instagram.com/' + username;
+    }
+    function keFacebook() {
+        var username = 'ahmad.alwi.1612';
+        window.location.href = 'https://www.facebook.com/' + username;
+    }
+
+    function keYoutube() {
+        var username = '@ahmadalwi1273';
+        window.location.href = 'https://www.youtube.com/' + username;
+    }
+
+    document.getElementById('image-container').addEventListener('click', function() {
+        // handle click event, if needed
+      });
+</script>
